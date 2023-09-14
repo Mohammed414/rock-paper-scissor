@@ -24,21 +24,21 @@ function playRound(playerSelection, computerSelection) {
 
   // ROCK
   if (playerSelection == "ROCK" && computerSelection == "PAPER") {
-    return "You Lose! Paper beats Rock";
+    return "Lose! Paper beats Rock";
   } else if (playerSelection == "ROCK" && computerSelection == "SCISSORS") {
-    return "You Win! Rock beats Scissors";
+    return "Win! Rock beats Scissors";
   }
   // PAPER
   else if (playerSelection == "PAPER" && computerSelection == "ROCK") {
-    return "You Win! Paper beats Rock";
+    return "Win! Paper beats Rock";
   } else if (playerSelection == "PAPER" && computerSelection == "SCISSORS") {
-    return "You Lose! Scissors beats Paper";
+    return "Lose! Scissors beats Paper";
   }
   // Scissors
   else if (playerSelection == "SCISSORS" && computerSelection == "ROCK") {
-    return "You Lose! Rock beats Scissors";
+    return "Lose! Rock beats Scissors";
   } else if (playerSelection == "SCISSORS" && computerSelection == "PAPER") {
-    return "You Win! Scissors beats Paper";
+    return "Win! Scissors beats Paper";
   }
 
   // tie
@@ -48,11 +48,27 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function game() {
-  const playerSelection = prompt("Rock | Paper | Scissor?");
-  const computerSelection = getComputerChoice();
-  console.log(computerSelection);
-  const result = playRound(playerSelection, computerSelection);
-  console.log(result);
+  let playerWins = 0;
+  let computerWins = 0;
+  for (let i = 0; i < 5; i++) {
+    console.log(`Round ${i + 1}`);
+    const playerSelection = prompt("Rock | Paper | Scissor?");
+    const computerSelection = getComputerChoice();
+    console.log("Computer selected", computerSelection);
+    const result = playRound(playerSelection, computerSelection);
+    console.log(result);
+    if (result[0] == "W") {
+      playerWins++;
+    } else if (result[0] == "L") {
+      computerWins++;
+    }
+  }
+
+  if (playerWins > computerWins) {
+    console.log("HUMAN WINS");
+  } else {
+    console.log("COMPUTER WINS");
+  }
 }
 
 game();
