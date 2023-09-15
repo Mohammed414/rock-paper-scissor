@@ -56,7 +56,7 @@ function game() {
     const computerSelection = getComputerChoice();
     console.log("Computer selected", computerSelection);
     const result = playRound(playerSelection, computerSelection);
-    console.log(result);
+    // console.log(result);
     if (result[0] == "W") {
       playerWins++;
     } else if (result[0] == "L") {
