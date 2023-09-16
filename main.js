@@ -47,28 +47,53 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
-function game() {
-  let playerWins = 0;
-  let computerWins = 0;
-  for (let i = 0; i < 5; i++) {
-    console.log(`Round ${i + 1}`);
-    const playerSelection = prompt("Rock | Paper | Scissor?");
-    const computerSelection = getComputerChoice();
-    console.log("Computer selected", computerSelection);
-    const result = playRound(playerSelection, computerSelection);
-    // console.log(result);
-    if (result[0] == "W") {
-      playerWins++;
-    } else if (result[0] == "L") {
-      computerWins++;
-    }
-  }
-
-  if (playerWins > computerWins) {
-    console.log("HUMAN WINS");
-  } else {
-    console.log("COMPUTER WINS");
-  }
-}
+function game() {}
 
 game();
+
+const buttons = document.querySelectorAll("button");
+
+function restartGame(playerScore, cpuScore, roundNumber) {
+  playerScore.textContent = 0;
+  cpuScore.textContent = 0;
+  roundNumber.textContent = 0;
+}
+
+const handleClick = (e) => {
+  const playerSelection = e.target.id.toUpperCase();
+  const computerSelection = getComputerChoice();
+
+  const cpu_button = document.querySelector(
+    `.cpu-buttons > #${computerSelection.toLowerCase()}`
+  );
+  cpu_button.classList.add("cpu-selected");
+  setTimeout(() => {
+    cpu_button.classList.remove("cpu-selected");
+  }, 1000);
+
+  const result = playRound(playerSelection, computerSelection);
+  const resultParagraph = document.querySelector(".result");
+  resultParagraph.textContent = result;
+
+  const playerScore = document.querySelector(".player-score");
+  const cpuScore = document.querySelector(".cpu-score");
+  const roundNumber = document.querySelector(".round-number");
+
+  if (result[0] == "W") {
+    playerScore.textContent = parseInt(playerScore.textContent) + 1;
+  } else if (result[0] == "L") {
+    cpuScore.textContent = parseInt(cpuScore.textContent) + 1;
+  }
+  roundNumber.textContent = parseInt(roundNumber.textContent) + 1;
+
+  if (playerScore.textContent == "5") {
+    resultParagraph.textContent = "That's it you won!!";
+    restartGame(playerScore, cpuScore, roundNumber);
+  }
+  if (cpuScore.textContent == "5") {
+    resultParagraph.textContent = "Oh crap, you lost :(";
+    restartGame(playerScore, cpuScore, roundNumber);
+  }
+};
+
+buttons.forEach((button) => button.addEventListener("click", handleClick));
